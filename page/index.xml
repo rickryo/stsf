@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Stay True Stay Free</title>
+    <link>https://rickryo.github.io/stsf/page/index.xml</link>
+    <description>Recent content in Pages on Stay True Stay Free</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>true-free@outlook.com (Rick)</managingEditor>
+    <webMaster>true-free@outlook.com (Rick)</webMaster>
+    <lastBuildDate>Fri, 13 Jan 2017 09:47:17 +0800</lastBuildDate>
+    <atom:link href="https://rickryo.github.io/stsf/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About Me</title>
+      <link>https://rickryo.github.io/stsf/page/about/</link>
+      <pubDate>Fri, 13 Jan 2017 09:47:17 +0800</pubDate>
+      <author>true-free@outlook.com (Rick)</author>
+      <guid>https://rickryo.github.io/stsf/page/about/</guid>
+      <description>
+
+&lt;h3 id=&#34;race-human-being&#34;&gt;RACE: Human Being&lt;/h3&gt;
+
+&lt;h3 id=&#34;name-rick-r&#34;&gt;NAME: Rick R.&lt;/h3&gt;
+
+&lt;h3 id=&#34;role-son-husband-father-father&#34;&gt;ROLE: Son, Husband, Father, Father&lt;/h3&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
