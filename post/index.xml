@@ -12,7 +12,7 @@
     <atom:link href="https://rickryo.github.io/stsf/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Git Bash代理设置</title>
+      <title>Git Bash HTTP代理设置</title>
       <link>https://rickryo.github.io/stsf/post/git-bash-proxy/</link>
       <pubDate>Thu, 19 Jan 2017 15:20:23 +0800</pubDate>
       <author>true-free@outlook.com (Rick)</author>
@@ -38,6 +38,16 @@ git config --global --unset https.proxy
 &lt;pre&gt;&lt;code&gt;git config --global --get http.proxy
 git config --global --get https.proxy
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;其它协议&#34;&gt;其它协议&lt;/h3&gt;
+
+&lt;p&gt;HTTP仅仅是Git支持的协议之一。&lt;a href=&#34;https://git-scm.com/book/tr/v2/Git-on-the-Server-The-Protocols&#34;&gt;官网&lt;/a&gt;上如是说：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Git can use four major protocols to transfer data: Local, HTTP, Secure Shell (SSH) and Git.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;有关SSH代理的设置，可以参考&lt;a href=&#34;https://kyonli.com/p/142&#34;&gt;这里&lt;/a&gt;。(未经验证)&lt;/p&gt;
 </description>
     </item>
     

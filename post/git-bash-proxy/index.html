@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Git Bash代理设置</title>
+  <title>Git Bash HTTP代理设置</title>
 
   <meta name="author" content="Rick" />
   
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="https://rickryo.github.io/stsf/css/pygment_highlights.css" />
   
   
-  <meta property="og:title" content="Git Bash代理设置" />
+  <meta property="og:title" content="Git Bash HTTP代理设置" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="/stsf/post/git-bash-proxy//" />
   <meta property="og:image" content="img/avatar-icon.png" />
@@ -94,7 +94,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>Git Bash代理设置</h1>
+          <h1>Git Bash HTTP代理设置</h1>
       
       
       
@@ -135,6 +135,16 @@ git config --global --unset https.proxy
 <pre><code>git config --global --get http.proxy
 git config --global --get https.proxy
 </code></pre>
+
+<h3 id="其它协议">其它协议</h3>
+
+<p>HTTP仅仅是Git支持的协议之一。<a href="https://git-scm.com/book/tr/v2/Git-on-the-Server-The-Protocols">官网</a>上如是说：</p>
+
+<blockquote>
+<p>Git can use four major protocols to transfer data: Local, HTTP, Secure Shell (SSH) and Git.</p>
+</blockquote>
+
+<p>有关SSH代理的设置，可以参考<a href="https://kyonli.com/p/142">这里</a>。(未经验证)</p>
 
       </article>
 
