@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stay True Stay Free</title>
-    <link>https://rickryo.github.io/stsf/index.xml</link>
+    <link>http://staytruestayfree.com/index.xml</link>
     <description>Recent content on Stay True Stay Free</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 19 Jan 2017 15:20:23 +0800</lastBuildDate>
-    <atom:link href="https://rickryo.github.io/stsf/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://staytruestayfree.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Git Bash HTTP代理设置</title>
-      <link>https://rickryo.github.io/stsf/post/git-bash-proxy/</link>
+      <link>http://staytruestayfree.com/post/git-bash-proxy/</link>
       <pubDate>Thu, 19 Jan 2017 15:20:23 +0800</pubDate>
       
-      <guid>https://rickryo.github.io/stsf/post/git-bash-proxy/</guid>
+      <guid>http://staytruestayfree.com/post/git-bash-proxy/</guid>
       <description>
 
 &lt;h3 id=&#34;设定&#34;&gt;设定&lt;/h3&gt;
@@ -51,10 +51,10 @@ git config --global --get https.proxy
     
     <item>
       <title>Hugo主题选介</title>
-      <link>https://rickryo.github.io/stsf/post/hugo-themes/</link>
+      <link>http://staytruestayfree.com/post/hugo-themes/</link>
       <pubDate>Thu, 19 Jan 2017 13:53:49 +0800</pubDate>
       
-      <guid>https://rickryo.github.io/stsf/post/hugo-themes/</guid>
+      <guid>http://staytruestayfree.com/post/hugo-themes/</guid>
       <description>
 
 &lt;p&gt;目前Hugo官方一共提供了&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;135款主题&lt;/a&gt;，下面归类简介其中的25款。&lt;br&gt;
@@ -109,20 +109,20 @@ git config --global --get https.proxy
     
     <item>
       <title>First Post</title>
-      <link>https://rickryo.github.io/stsf/post/first/</link>
+      <link>http://staytruestayfree.com/post/first/</link>
       <pubDate>Fri, 13 Jan 2017 09:48:13 +0800</pubDate>
       
-      <guid>https://rickryo.github.io/stsf/post/first/</guid>
+      <guid>http://staytruestayfree.com/post/first/</guid>
       <description>&lt;p&gt;This is my first post, how exciting!&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>https://rickryo.github.io/stsf/page/about/</link>
+      <link>http://staytruestayfree.com/page/about/</link>
       <pubDate>Fri, 13 Jan 2017 09:47:17 +0800</pubDate>
       
-      <guid>https://rickryo.github.io/stsf/page/about/</guid>
+      <guid>http://staytruestayfree.com/page/about/</guid>
       <description>
 
 &lt;h3 id=&#34;race-human&#34;&gt;RACE: human&lt;/h3&gt;
