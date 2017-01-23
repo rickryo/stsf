@@ -6,8 +6,6 @@
     <description>Recent content in Posts on Stay True Stay Free</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>true-free@outlook.com (Rick)</managingEditor>
-    <webMaster>true-free@outlook.com (Rick)</webMaster>
     <lastBuildDate>Thu, 19 Jan 2017 15:20:23 +0800</lastBuildDate>
     <atom:link href="https://rickryo.github.io/stsf/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +13,7 @@
       <title>Git Bash HTTP代理设置</title>
       <link>https://rickryo.github.io/stsf/post/git-bash-proxy/</link>
       <pubDate>Thu, 19 Jan 2017 15:20:23 +0800</pubDate>
-      <author>true-free@outlook.com (Rick)</author>
+      
       <guid>https://rickryo.github.io/stsf/post/git-bash-proxy/</guid>
       <description>
 
@@ -55,7 +53,7 @@ git config --global --get https.proxy
       <title>Hugo主题选介</title>
       <link>https://rickryo.github.io/stsf/post/hugo-themes/</link>
       <pubDate>Thu, 19 Jan 2017 13:53:49 +0800</pubDate>
-      <author>true-free@outlook.com (Rick)</author>
+      
       <guid>https://rickryo.github.io/stsf/post/hugo-themes/</guid>
       <description>
 
@@ -113,7 +111,7 @@ git config --global --get https.proxy
       <title>First Post</title>
       <link>https://rickryo.github.io/stsf/post/first/</link>
       <pubDate>Fri, 13 Jan 2017 09:48:13 +0800</pubDate>
-      <author>true-free@outlook.com (Rick)</author>
+      
       <guid>https://rickryo.github.io/stsf/post/first/</guid>
       <description>&lt;p&gt;This is my first post, how exciting!&lt;/p&gt;
 </description>
