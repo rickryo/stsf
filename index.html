@@ -126,8 +126,8 @@
             
             
             <article class="post-preview">
-              <a href="http://www.staytruestayfree.com/post/cache-aside-pattern/">
-          	  <h2 class="post-title">Cache-Aside模式</h2>
+              <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/">
+          	  <h2 class="post-title">云设计模式翻译系列之二：Cache-Aside模式</h2>
           	
           	    
               </a>
@@ -161,7 +161,7 @@
   示例 在Windows Azure中，你可以使用Windows Azure Cache来创建一个可供多个应用程序实例共享的分布式缓存。下面的代码示例中的GetMyEntityAsync方法展示了Cache-Aside模式基于Windows Azure Cache的一个实现。该方法使用read-though方式从缓存获取一个对象。
 一个对象通过使用一个整数ID作为Key来唯一标识。GetMyEntityAsync方法基于此Key生成一个字符串值（Windows Azure Cache的API使用字符串作为Key值），并尝试使用该Key从缓存中获取相匹配的项目。如果该匹配项目被找到，则将其返回。如果在缓存中没有相应匹配项目，GetMyEntityAsync方法会从数据存储获取该对象，并把它添加到缓存，然后返回它（因为依赖于具体的数据存储实现，所以实际从数据存储取得数据的代码被省略了）。注意，为防止由于别处发生的更新导致的缓存数据陈旧，缓存项目被进行了过期设置的配置。
 C#
-          	  <a href="http://www.staytruestayfree.com/post/cache-aside-pattern/" class="post-read-more">[Read&nbsp;More]</a>
+          	  <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
             
              </article>
