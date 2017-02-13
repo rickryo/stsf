@@ -6,8 +6,188 @@
     <description>Recent content in Posts on Stay True Stay Free</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jan 2017 15:20:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Feb 2017 16:24:14 +0800</lastBuildDate>
     <atom:link href="http://www.staytruestayfree.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cache-Aside模式</title>
+      <link>http://www.staytruestayfree.com/post/cache-aside-pattern/</link>
+      <pubDate>Mon, 13 Feb 2017 16:24:14 +0800</pubDate>
+      
+      <guid>http://www.staytruestayfree.com/post/cache-aside-pattern/</guid>
+      <description>
+
+&lt;h2 id=&#34;原文-https-msdn-microsoft-com-en-us-library-dn589799-aspx&#34;&gt;&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn589799.aspx&#34;&gt;原文&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn600216.aspx&#34;&gt;&lt;img src=&#34;http://www.staytruestayfree.com/img/cloud-design-patterns/icons/data-management.png&#34; alt=&#34;Data Management&#34; title=&#34;Data Management&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn600224.aspx&#34;&gt;&lt;img src=&#34;http://www.staytruestayfree.com/img/cloud-design-patterns/icons/performance-and-scalability.png&#34; alt=&#34;Performance &amp;amp; scalability.png&#34; title=&#34;Performance &amp;amp; scalability.png&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn600223.aspx&#34;&gt;&lt;img src=&#34;http://www.staytruestayfree.com/img/cloud-design-patterns/icons/design-patterns.png&#34; alt=&#34;Design Patterns&#34; title=&#34;Design Patterns&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;在需要时从数据存储（data store）往缓存加载数据。这种模式可以提高性能，并有助于保持缓存与数据存储间的数据一致性。&lt;/p&gt;
+
+&lt;h2 id=&#34;背景和问题&#34;&gt;背景和问题&lt;/h2&gt;
+
+&lt;p&gt;应用程序使用缓存，以优化对数据存储中的信息的反复访问。但如果期望缓存与数据存储中的数据总是完全一致，通常却是不切实际的。应用程序需要实施这样一种策略，一方面确保在缓存中的数据是尽可能的最新状态，另一方面当缓存中的数据过期时，要能够对其察知和处理。&lt;/p&gt;
+
+&lt;h2 id=&#34;解决方案&#34;&gt;解决方案&lt;/h2&gt;
+
+&lt;p&gt;许多商业缓存系统提供read-through和write-though/write-behind操作。（译者注：关于xxx-aside/though/behind这些晦涩的用语，请参考&lt;a href=&#34;http://www.alachisoft.com/resources/articles/readthru-writethru-writebehind.html&#34;&gt;Using Read-through &amp;amp; Write-through in Distributed Cache&lt;/a&gt;和&lt;a href=&#34;https://en.wikipedia.org/wiki/Cache_memory&#34;&gt;Cache memory&lt;/a&gt;。）在这些系统中，应用程序通过引用缓存获取数据。如果数据不在缓存中，数据会被透明地从数据存储中取得并添加到缓存中。对缓存中的数据的任何修改也都会被自动写回到数据存储中。&lt;/p&gt;
+
+&lt;p&gt;对于那些不提供上述功能的缓存，对缓存中数据的维护工作就成为了使用缓存的应用程序的职责。&lt;/p&gt;
+
+&lt;p&gt;一个应用程序可以通过实现Cache-Aside策略来模拟read-through缓存的功能。该策略高效地将数据按需载入缓存。图1总结了这一过程的各个步骤。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.staytruestayfree.com/img/cloud-design-patterns/cache-aside-pattern/figure-1.png&#34; alt=&#34;图1 - 使用Cache-Aside模式在缓存中存储数据&#34; title=&#34;图1 - 使用Cache-Aside模式在缓存中存储数据&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;图1 - 使用Cache-Aside模式在缓存中存储数据&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;如果一个应用程序要更新信息，它可以按照如下步骤来模拟write-through策略：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;修改数据存储中的数据。&lt;/li&gt;
+&lt;li&gt;将缓存中的相应项目置为无效。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;当下一次需要使用该项目时，根据Cache-Aside策略，应用程序会从数据存储中取得更新后的数据，并将其添加回缓存。&lt;/p&gt;
+
+&lt;h2 id=&#34;问题和注意事项&#34;&gt;问题和注意事项&lt;/h2&gt;
+
+&lt;p&gt;在决定如何实施这一模式时，请考虑以下几点：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;缓存数据的生命周期&lt;/strong&gt;。许多缓存实现了一个过期策略，根据过期策略，如果缓存中的数据持续一段规定的期限没有被访问，相应数据就会被置为无效，并被从缓存中删除。为了Cache-Aside模式的高效实施，需要确保过期策略与使用数据的应用程序的访问模式相匹配。不要使有效期限太短，因为这会导致应用程序不断地从数据存储中获取数据并把它添加到缓存。同样，不要使有效期限太长，因为这会导致缓存数据容易变得陈旧。请记住，针对相对静态的数据，或者频繁被读取的数据，缓存才是最有效的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;清除数据&lt;/strong&gt;。相对于作为数据源头的数据存储来说，大部分缓存只具备有限的数据容量，并且在必要时缓存将会清除数据。大多数缓存采用了最少最近使用（least-recently-used）策略来选择要清除的对象项目，但清除策略是可定制的。请配置缓存的全局过期属性和其它属性，以及每个缓存项目的过期属性，以帮助确保缓存在成本上是高效的。而对缓存中的所有项目都施加一个全局清除策略可能不总是适当的。例如，如果从数据存储中获取一个缓存项目的开销非常大，那么如下策略可能会更为有利：在缓存中保持这一获取开销巨大的项目，为此而清除那些更频繁被访问但获取开销更小的项目。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;预装缓存&lt;/strong&gt;。许多解决方案在启动处理中，会用那些可能会被应用程序需要的数据来预填充缓存。如果发生某些数据过期或被清除的情况，Cache-Aside模式可能仍然是有用的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;一致性&lt;/strong&gt;。实现Cache-Aside模式不保证数据存储和缓存之间的一致性。在数据存储中的项目可在任何时间被一个外部进程来改变，而这种改变可能直到下一次该项目被载入缓存时才能在缓存中被反映。在跨数据存储复制数据的系统中，如果同步发生得非常频繁，这个问题可能会变得特别尖锐。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;本地（内存内）缓存&lt;/strong&gt;。对一个应用程序实例来说，缓存可以是本地的，存储在内存中。如果一个应用程序反复访问相同的数据，Cache-Aside模式在这样的环境中是有用的。然而，本地缓存是私有的，因此对于相同的缓存数据，不同应用程序实例可能各自拥有它的一个副本。数据在各个缓存间可能很快就变得不一致了，因此可能需要更为频繁的使私有缓存中的数据过期并对其刷新。在这些场景下，可能适合于考虑使用共享式或分布式缓存机制。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;何时使用这种模式&#34;&gt;何时使用这种模式&lt;/h2&gt;
+
+&lt;p&gt;使用此模式时：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;缓存不提供原生的read-through和write-through操作。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;资源需求是不可预测的。这种模式使应用程序能够按需加载数据。对于应用程序需要哪些数据，它不提前做任何假设。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这种模式可能不适合：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;当缓存的数据集是静态的。如果这样的数据能够被放入可用的缓存空间，那么请在启动中预装入这些数据，并对其实施数据不会过期的策略。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;对于在署在Web服务器群（web farm）上的Web应用程序的会话状态信息的缓存。在这种环境下，你应该避免引入基于客户端—服务器关系的依赖。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;示例&#34;&gt;示例&lt;/h2&gt;
+
+&lt;p&gt;在Windows Azure中，你可以使用Windows Azure Cache来创建一个可供多个应用程序实例共享的分布式缓存。下面的代码示例中的GetMyEntityAsync方法展示了Cache-Aside模式基于Windows Azure Cache的一个实现。该方法使用read-though方式从缓存获取一个对象。&lt;/p&gt;
+
+&lt;p&gt;一个对象通过使用一个整数ID作为Key来唯一标识。GetMyEntityAsync方法基于此Key生成一个字符串值（Windows Azure Cache的API使用字符串作为Key值），并尝试使用该Key从缓存中获取相匹配的项目。如果该匹配项目被找到，则将其返回。如果在缓存中没有相应匹配项目，GetMyEntityAsync方法会从数据存储获取该对象，并把它添加到缓存，然后返回它（因为依赖于具体的数据存储实现，所以实际从数据存储取得数据的代码被省略了）。注意，为防止由于别处发生的更新导致的缓存数据陈旧，缓存项目被进行了过期设置的配置。&lt;/p&gt;
+
+&lt;p&gt;C#&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;private DataCache cache;
+...
+
+public async Task&amp;lt;MyEntity&amp;gt; GetMyEntityAsync(int id)
+{
+  // 为本方法及其参数定义一个唯一的key
+  var key = string.Format(&amp;quot;StoreWithCache_GetAsync_{0}&amp;quot;, id);
+  var expiration = TimeSpan.FromMinutes(3);
+  bool cacheException = false;
+
+  try
+  {
+    // 尝试从缓存取得实体数据
+    var cacheItem = cache.GetCacheItem(key);
+    if (cacheItem != null)
+    {
+      return cacheItem.Value as MyEntity;
+    }
+  }
+  catch (DataCacheException)
+  {
+    // 如果发生缓存相关问题
+    // 则抛出异常以避免在本次调用中的后续处理中使用缓存
+    cacheException = true;
+  }
+
+  // 如果缓存未命中，则从原始的存储中取得实体数据并对其缓存
+  // 因为依赖于具体数据存储的实现，此处的代码被省略了
+  var entity = ...;
+
+  if (!cacheException)
+  {
+    try
+    {
+      // 避免缓存null值
+      if (entity != null)
+      {
+        // 把该项目放入缓存，并对其设置一个定制的过期时间 
+        // 设置的过期时间的长短取决于数据变得陈旧的可能性的大小
+        cache.Put(key, entity, timeout: expiration);
+      }
+    }
+    catch (DataCacheException)
+    {
+      // 如果发生缓存相关问题
+      // 忽略问题并直接返回实体数据
+    }
+  }
+
+  return entity;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意：
+示例使用了Windows Azure Cache API来访问存储和从缓存中取得信息。有关Windows Azure Cache API的更多信息，请参阅MSDN上的&lt;a href=&#34;http://msdn.microsoft.com/library/windowsazure/hh914165.aspx&#34;&gt;使用Windows Azure Cache&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;下面的UpdateEntityAsync方法展示了当其值被应用程序改变时，如何使缓存中的对象失效。这是一个write-through方式的例子。这段代码更新原始的数据存储（因为依赖于具体的数据存储实现，这部分功能的代码被省略了），然后通过指定Key调用Remove方法，从而在缓存中删除该缓存项目。&lt;/p&gt;
+
+&lt;p&gt;注意：
+在这个序列中，各步骤的顺序是重要的。如果相应项目在缓存被更新之前（译者注：此处为“在数据存储被更新之前”更为合理）就被删除，就会产生一个短暂的窗口期间，在此期间客户应用有可能在数据存储中的数据被更新之前取得该数据（因为没有在缓存中找到该数据），从而导致缓存中保存了陈旧的数据。&lt;/p&gt;
+
+&lt;p&gt;C#&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public async Task UpdateEntityAsync(MyEntity entity)
+{
+  // 更新原始数据存储中的对象
+  await this.store.UpdateEntityAsync(entity).ConfigureAwait(false);
+
+  // 取得被缓存对象的相应的Key
+  var key = this.GetAsyncCacheKey(entity.Id);
+
+  // 然后，使当前的缓存对象失效
+  this.cache.Remove(key);
+}
+
+private string GetAsyncCacheKey(int objectId)
+{
+  return string.Format(&amp;quot;StoreWithCache_GetAsync_{0}&amp;quot;, objectId);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;相关模式和指南&#34;&gt;相关模式和指南&lt;/h2&gt;
+
+&lt;p&gt;实施这一模式时，以下模式和指南也可能是相关的：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn589802.aspx&#34;&gt;缓存指南&lt;/a&gt; 。针对在云解决方案中如何缓存数据，以及当你实现一个缓存时应该考虑的问题，该指南提供了额外的信息。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn589800.aspx&#34;&gt;数据一致性入门&lt;/a&gt; 。云应用程序通常使用的是分散在多个数据存储间的数据。在这样的环境中，管理和维护数据一致性可能会成为系统中的一个关键方面，特别是在那些能导致并发性和可用性问题的方面。该入门描述了在分布式存储的数据间产生的一致性问题，并总结了应用程序如何实现最终一致性，从而保持数据的可用性。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;更多信息&#34;&gt;更多信息&lt;/h2&gt;
+
+&lt;p&gt;MSDN上的文章&lt;a href=&#34;http://msdn.microsoft.com/library/windowsazure/hh914165.aspx&#34;&gt;使用Windows Azure Cache&lt;/a&gt;。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Git Bash HTTP代理设置</title>
