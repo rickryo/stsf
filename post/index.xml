@@ -195,9 +195,11 @@ private string GetAsyncCacheKey(int objectId)
       <pubDate>Mon, 13 Feb 2017 12:25:15 +0800</pubDate>
       
       <guid>http://www.staytruestayfree.com/post/cdp-preface/</guid>
-      <description>&lt;p&gt;今天开始翻译源自MSDN的Cloud Design Patterns系列文章，希望可以坚持完成。&lt;/p&gt;
+      <description>&lt;p&gt;今天开始翻译源自MSDN的&lt;a href=&#34;https://msdn.microsoft.com/en-us/library/dn568099.aspx&#34;&gt;Cloud Design Patterns&lt;/a&gt;系列文章，希望可以坚持完成。&lt;/p&gt;
 
 &lt;p&gt;原本是想使用MSDN的Translation Wiki来翻译，但对于这个系列的文章，我没有找到翻译的编辑入口。如果有人知道方法，请联系我。&lt;/p&gt;
+
+&lt;p&gt;另外，在动笔的时候，才发现已经有同仁在从事这些文章的翻译了，其中有一些是照搬机器翻译或者大段不完整翻译的，也有如这个进行中的&lt;a href=&#34;https://www.gitbook.com/book/sapphirewriter/cloud-design-patterns/details&#34;&gt;GitBook&lt;/a&gt;这样精译的,读者可以阅读原文和不同译本，通过对比以获得最准确的理解。&lt;/p&gt;
 </description>
     </item>
     
