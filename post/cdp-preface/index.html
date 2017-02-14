@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Git Bash HTTP代理设置</title>
+  <title>Cloud Design Patterns翻译之序言</title>
 
   <meta name="author" content="R.R." />
   
@@ -24,9 +24,9 @@
   <link rel="stylesheet" href="http://www.staytruestayfree.com/css/pygment_highlights.css" />
   
   
-  <meta property="og:title" content="Git Bash HTTP代理设置" />
+  <meta property="og:title" content="Cloud Design Patterns翻译之序言" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/post/git-bash-proxy//" />
+  <meta property="og:url" content="/post/cdp-preface//" />
   <meta property="og:image" content="img/avatar-icon.png" />
   
   
@@ -121,11 +121,11 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>Git Bash HTTP代理设置</h1>
+          <h1>Cloud Design Patterns翻译之序言</h1>
       
       
       
-      <span class="post-meta">Posted on January 19, 2017</span>
+      <span class="post-meta">Posted on February 13, 2017</span>
       
         </div>
       </div>
@@ -141,49 +141,21 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-          
+          <p>今天开始翻译源自MSDN的Cloud Design Patterns系列文章，希望可以坚持完成。</p>
 
-<h3 id="设定">设定</h3>
-
-<pre><code>git config --global http.proxy http://127.0.0.1:1080
-git config --global https.proxy http://127.0.0.1:1080
-</code></pre>
-
-<p><strong><em>注意：有些例子把代理服务的URL用单引号括上，但在我的环境里带单引号的设置导致了错误。</em></strong></p>
-
-<h3 id="取消">取消</h3>
-
-<pre><code>git config --global --unset http.proxy
-git config --global --unset https.proxy
-</code></pre>
-
-<h3 id="查看">查看</h3>
-
-<pre><code>git config --global --get http.proxy
-git config --global --get https.proxy
-</code></pre>
-
-<h3 id="其它协议">其它协议</h3>
-
-<p>HTTP仅仅是Git支持的协议之一。<a href="https://git-scm.com/book/tr/v2/Git-on-the-Server-The-Protocols">官网</a>上如是说：</p>
-
-<blockquote>
-<p>Git can use four major protocols to transfer data: Local, HTTP, Secure Shell (SSH) and Git.</p>
-</blockquote>
-
-<p>有关SSH代理的设置，可以参考<a href="https://kyonli.com/p/142">这里</a>。(未经验证)</p>
+<p>原本是想使用MSDN的Translation Wiki来翻译，但对于这个系列的文章，我没有找到翻译的编辑入口。如果有人知道方法，请联系我。</p>
 
       </article>
 
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://www.staytruestayfree.com/post/hugo-themes/" data-toggle="tooltip" data-placement="top" title="Hugo主题简介">&larr; Previous Post</a>
+          <a href="http://www.staytruestayfree.com/post/git-bash-proxy/" data-toggle="tooltip" data-placement="top" title="Git Bash HTTP代理设置">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://www.staytruestayfree.com/post/cdp-preface/" data-toggle="tooltip" data-placement="top" title="Cloud Design Patterns翻译之序言">Next Post &rarr;</a>
+          <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/" data-toggle="tooltip" data-placement="top" title="Cloud Design Patterns翻译之二：Cache-Aside模式">Next Post &rarr;</a>
         </li>
         
       </ul>

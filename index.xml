@@ -10,7 +10,7 @@
     <atom:link href="http://www.staytruestayfree.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>云设计模式翻译系列之二：Cache-Aside模式</title>
+      <title>Cloud Design Patterns翻译之二：Cache-Aside模式</title>
       <link>http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/</link>
       <pubDate>Mon, 13 Feb 2017 16:24:14 +0800</pubDate>
       
@@ -186,6 +186,18 @@ private string GetAsyncCacheKey(int objectId)
 &lt;h2 id=&#34;更多信息&#34;&gt;更多信息&lt;/h2&gt;
 
 &lt;p&gt;MSDN上的文章&lt;a href=&#34;http://msdn.microsoft.com/library/windowsazure/hh914165.aspx&#34;&gt;使用Windows Azure Cache&lt;/a&gt;。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cloud Design Patterns翻译之序言</title>
+      <link>http://www.staytruestayfree.com/post/cdp-preface/</link>
+      <pubDate>Mon, 13 Feb 2017 12:25:15 +0800</pubDate>
+      
+      <guid>http://www.staytruestayfree.com/post/cdp-preface/</guid>
+      <description>&lt;p&gt;今天开始翻译源自MSDN的Cloud Design Patterns系列文章，希望可以坚持完成。&lt;/p&gt;
+
+&lt;p&gt;原本是想使用MSDN的Translation Wiki来翻译，但对于这个系列的文章，我没有找到翻译的编辑入口。如果有人知道方法，请联系我。&lt;/p&gt;
 </description>
     </item>
     

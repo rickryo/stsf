@@ -132,7 +132,7 @@
             
             <article class="post-preview">
               <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/">
-          	  <h2 class="post-title">云设计模式翻译系列之二：Cache-Aside模式</h2>
+          	  <h2 class="post-title">Cloud Design Patterns翻译之二：Cache-Aside模式</h2>
           	
           	    
               </a>
@@ -167,6 +167,25 @@
 一个对象通过使用一个整数ID作为Key来唯一标识。GetMyEntityAsync方法基于此Key生成一个字符串值（Windows Azure Cache的API使用字符串作为Key值），并尝试使用该Key从缓存中获取相匹配的项目。如果该匹配项目被找到，则将其返回。如果在缓存中没有相应匹配项目，GetMyEntityAsync方法会从数据存储获取该对象，并把它添加到缓存，然后返回它（因为依赖于具体的数据存储实现，所以实际从数据存储取得数据的代码被省略了）。注意，为防止由于别处发生的更新导致的缓存数据陈旧，缓存项目被进行了过期设置的配置。
 C#
           	  <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+            
+             </article>
+            
+            <article class="post-preview">
+              <a href="http://www.staytruestayfree.com/post/cdp-preface/">
+          	  <h2 class="post-title">Cloud Design Patterns翻译之序言</h2>
+          	
+          	    
+              </a>
+
+              <p class="post-meta">
+                Posted on February 13, 2017
+              </p>
+            
+              <div class="post-entry">
+                今天开始翻译源自MSDN的Cloud Design Patterns系列文章，希望可以坚持完成。
+原本是想使用MSDN的Translation Wiki来翻译，但对于这个系列的文章，我没有找到翻译的编辑入口。如果有人知道方法，请联系我。
+          	  <a href="http://www.staytruestayfree.com/post/cdp-preface/" class="post-read-more">[Read&nbsp;More]</a>
               </div>
             
              </article>
