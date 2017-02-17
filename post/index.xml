@@ -10,7 +10,7 @@
     <atom:link href="http://www.staytruestayfree.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Cloud Design Patterns翻译之二：Cache-Aside模式</title>
+      <title>Cache-Aside模式</title>
       <link>http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/</link>
       <pubDate>Mon, 13 Feb 2017 16:24:14 +0800</pubDate>
       
@@ -190,7 +190,7 @@ private string GetAsyncCacheKey(int objectId)
     </item>
     
     <item>
-      <title>Cloud Design Patterns翻译之序言</title>
+      <title>Cloud Design Patterns系列翻译代序</title>
       <link>http://www.staytruestayfree.com/post/cdp-preface/</link>
       <pubDate>Mon, 13 Feb 2017 12:25:15 +0800</pubDate>
       
