@@ -221,17 +221,15 @@
 <li><p>在<a href="https://console.cloud.google.com/kubernetes?_ga=2.200621287.893168199.1516952438-232307664.1502076417">Google Kubernetes Engine Console</a> 的上部标题栏中，点击*Activate Google Cloud Shell*图标启动gcloud的在线控制台。图标位置参见<img src="https://cloud.google.com/shell/docs/images/startcloudshell1.png" alt="示意图" />。</p></li>
 
 <li><p>在gcloud控制台中，执行以下命令：</p></li>
-</ol>
 
-<pre><code class="language-shell">  gcloud container clusters list
+<code class="language-shell">  gcloud container clusters list
   gcloud container clusters get-credentials istio-cluster --zone=us-central1-a
-</code></pre>
+</code>
 
-<ol>
 <li><p>在gcloud控制台中，执行以下命令：</p>
 
-<pre><code class="language-shell">kubectl get deployments,ing
-</code></pre>
+<code class="language-shell">kubectl get deployments,ing
+</code>
 
 <p>在命令执行后输出的信息中，找到ADDRESS和PORTS，此即为公网上访问BookInfo Sample的IP和端口。</p></li>
 
