@@ -111,9 +111,7 @@
 
 &lt;li&gt;&lt;p&gt;访问http://&lt;em&gt;ADDRESS:PORTS&lt;/em&gt;/productpage即可看到BookInfo Sample的页面，其中的*ADDRESS:PORTS*替换为上一步中得到的信息。&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;使用完成后，可在Google Cloud的&lt;a href=&#34;https://console.cloud.google.com/deployments&#34;&gt;部署管理器&lt;/a&gt;中删除所有已部署的环境。&lt;/p&gt;
-
-&lt;p&gt;​&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用完成后，可在Google Cloud的&lt;a href=&#34;https://console.cloud.google.com/deployments&#34;&gt;部署管理器&lt;/a&gt;中删除所有已部署的环境。&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
