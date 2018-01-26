@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.staytruestayfree.com/post/quickly_deploy_Istio/</loc>
+    <lastmod>2018-01-26T18:15:16+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/</loc>
     <lastmod>2017-02-13T16:24:14+08:00</lastmod>
   </url>
@@ -27,10 +32,6 @@
   </url>
   
   <url>
-    <loc>http://www.staytruestayfree.com/post/quickly_deploy_Istio/</loc>
-  </url>
-  
-  <url>
     <loc>http://www.staytruestayfree.com/page/</loc>
     <lastmod>2017-01-13T09:47:17+08:00</lastmod>
     <priority>0</priority>
@@ -38,13 +39,13 @@
   
   <url>
     <loc>http://www.staytruestayfree.com/post/</loc>
-    <lastmod>2017-02-13T16:24:14+08:00</lastmod>
+    <lastmod>2018-01-26T18:15:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.staytruestayfree.com/</loc>
-    <lastmod>2017-02-13T16:24:14+08:00</lastmod>
+    <lastmod>2018-01-26T18:15:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
