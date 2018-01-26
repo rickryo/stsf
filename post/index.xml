@@ -297,5 +297,116 @@ git config --global --get https.proxy
 </description>
     </item>
     
+    <item>
+      <title></title>
+      <link>http://www.staytruestayfree.com/post/quickly_deploy_Istio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.staytruestayfree.com/post/quickly_deploy_Istio/</guid>
+      <description>
+
+&lt;h1 id=&#34;快速搭建istio环境&#34;&gt;快速搭建Istio环境&lt;/h1&gt;
+
+&lt;h3 id=&#34;问题域&#34;&gt;【问题域】&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;任务：搭建一个Istio的Bookinfo Sample&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;约束：搭建成果要求公网可访问可确认&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;资源：三个晚上的时间，一个Vultr账号，一台MacBook Pro&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;h3 id=&#34;解决域&#34;&gt;【解决域】&lt;/h3&gt;
+
+&lt;h3 id=&#34;一-选型&#34;&gt;一、选型&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;基于Kubernetes以外的平台&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;和Kubernetes平台比各方面未见优势，不考虑&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;基于在MacBook Pro上搭建的Minikube&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;公开到公网还需要花生壳等的支持，硬件有限时间更有限，或许可行，先不考虑&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;基于在Vultr上Creating Kubernetes from Scratch（2-3节点）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;此方案最能匹配进行该任务的初衷（学习Kubernetes搭建），但步骤较多时间不够，NG&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;基于在Vultr上使用kubeadm搭建的Kubernetes集群&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;步骤不多，时间上或许可行，可作为备选方案&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在Google Cloud Platform 上搭建Kubernetes + Istio&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一站式解决，步骤最少，自带免费服务器资源，选为首选方案&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;h3 id=&#34;二-实施&#34;&gt;二、实施&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;到Istio官网找到&lt;a href=&#34;https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html&#34;&gt;Quick Start with Google Kubernetes Engine&lt;/a&gt;作为整个实施过程的指南资料。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;到&lt;a href=&#34;https://cloud.google.com/free/?hl=zh-cn&#34;&gt;Google Cloud Platform&lt;/a&gt;，注册账号，提交信用卡信息，获取$300的一年免费资源。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;虽然申请成功，但付款设置里的结算信用卡账号被冻结，需要向谷歌在线申诉，申诉填写的内容很简单，但需要上传身份证/护照照片和信用卡正面照片（卡号用手指遮挡只露出4位尾号即可），一天内得到邮件回复信用卡账号解冻。（信用卡账号冻结的情况网上也有反映，我申请免费资源时收到了$1的信用卡支付失败短信，我怀疑跟我使用海外IP使用信用卡有关，抑或是银行针对性的封锁。）&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;到&lt;a href=&#34;https://console.cloud.google.com/apis/library/container.googleapis.com/&#34;&gt;Google Container Engine API&lt;/a&gt;打开对此API的使用（使用获赠的免费资源）。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;到&lt;a href=&#34;https://console.cloud.google.com/iam-admin/iam/project&#34;&gt;Cloud Console&lt;/a&gt;，找到Compute Engine default service account（账号格式为projectNumber-compute@developer.gserviceaccount.com），对此账号在缺省的Editor角色外添加Kubernetes Engine Admin角色。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;到&lt;a href=&#34;https://accounts.google.com/signin/v2/identifier?service=cloudconsole&amp;amp;continue=https://console.cloud.google.com/launcher/config?templateurl=https://raw.githubusercontent.com/istio/istio/master/install/gcp/deployment_manager/istio-cluster.jinja&amp;amp;followup=https://console.cloud.google.com/launcher/config?templateurl=https://raw.githubusercontent.com/istio/istio/master/install/gcp/deployment_manager/istio-cluster.jinja&amp;amp;flowName=GlifWebSignIn&amp;amp;flowEntry=ServiceLogin&#34;&gt;Istio GKE Deployment Manager&lt;/a&gt;安装Kubernetes + Istio + BookInfo，按照官网的说法，直接使用缺省设置Deploy即可。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;但直接使用缺省设置Deploy，安装过程中会报*Quota &amp;lsquo;CPUS&amp;rsquo; exceeded. Limit: 8.0*的错。这是因为免费资源在一个Zone最多只提供8 cpus的资源，安装过程中不够用（安装过程中要使用比最终占用的更多的cpus）。解决办法是把*Node Machine Type*从缺省的2 vCPU改小为1 vCPU。（因为官网说使用GKE搭BookInfo至少要4个nodes，所以我们不改变缺省的&lt;em&gt;Number of GKE nodes to run on&lt;/em&gt; = 4）&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装过程中还遇到了部署waiter超时的错误，最终安装成功的版本的设置为：在步骤7的设置以外，把缺省设置中除*Add BookInfo Sample Application*以外的其它可选模块都不选了，但也许该错误与选择的模块无关，即使都选也可以成功（未经验证）。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在&lt;a href=&#34;https://console.cloud.google.com/kubernetes?_ga=2.200621287.893168199.1516952438-232307664.1502076417&#34;&gt;Google Kubernetes Engine Console&lt;/a&gt; 的上部标题栏中，点击*Activate Google Cloud Shell*图标启动gcloud的在线控制台。图标位置参见&lt;img src=&#34;https://cloud.google.com/shell/docs/images/startcloudshell1.png&#34; alt=&#34;示意图&#34; /&gt;。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在gcloud控制台中，执行以下命令：&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;  gcloud container clusters list
+  gcloud container clusters get-credentials istio-cluster --zone=us-central1-a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;在gcloud控制台中，执行以下命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;kubectl get deployments,ing
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在命令执行后输出的信息中，找到ADDRESS和PORTS，此即为公网上访问BookInfo Sample的IP和端口。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;访问http://&lt;em&gt;ADDRESS:PORTS&lt;/em&gt;/productpage即可看到BookInfo Sample的页面，其中的*ADDRESS:PORTS*替换为上一步中得到的信息。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用完成后，可在Google Cloud的&lt;a href=&#34;https://console.cloud.google.com/deployments&#34;&gt;部署管理器&lt;/a&gt;中删除所有已部署的环境。&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>
