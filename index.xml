@@ -20,9 +20,8 @@
 &lt;h3 id=&#34;一-任务&#34;&gt;一、任务&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;使用kubeadm搭建一个1master+2slaves的kubernates集群&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;于集群上部署Istio，运行其BookInfo示例&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;使用kubeadm搭建一个1master+2slaves的kubernates集群&lt;/li&gt;
+&lt;li&gt;于集群上部署Istio，运行其BookInfo示例&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;​&lt;/p&gt;
