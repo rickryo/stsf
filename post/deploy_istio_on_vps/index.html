@@ -148,7 +148,7 @@
 <ul>
 <li><p>使用kubeadm搭建一个1master+2slaves的kubernates集群</p></li>
 
-<li><p>于集群上部署Istio，运行其BookInfo示例。</p></li>
+<li><p>于集群上部署Istio，运行其BookInfo示例</p></li>
 </ul>
 
 <p>​</p>
@@ -162,8 +162,7 @@
 <li>需要注意的是，很多海外VPS的IP都被封掉了，ping不通。（可到站长之家之类的网站去确认，国内ping不通，海外可通。）对此可重建VPS直至获取可访问的IP，或者依赖科学上网的跳板机。</li>
 <li>另外，做验证只使用公网IP即可，无需使用数据中心的内网IP（当然实际的生产环境是使用内网IP的），甚至这三台VPS还可以是跨数据中心的，都可以搭建成功。</li>
 </ul></li>
-
-<li><p>基本的知识依据为官网指南，按使用顺序依次为</p>
+<li>基本的知识依据为官网指南，按使用顺序依次为
 
 <ul>
 <li><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">安装kubeadm</a> <code>注1</code></li>
@@ -187,10 +186,10 @@ systemctl disable firewalld</li>
 </ol>
 
 <p>cat &lt;<EOF >  /etc/sysctl.d/k8s.conf
-   net.bridge.bridge-nf-call-ip6tables = 1
-   net.bridge.bridge-nf-call-iptables = 1
-   EOF
-   sysctl &ndash;system</p>
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl &ndash;system</p>
 
 <p>setenforce 0</p>
 
@@ -199,19 +198,19 @@ systemctl disable firewalld</li>
 <p>yum update</p>
 
 <p>yum install -y docker
-   systemctl enable docker &amp;&amp; systemctl start docker</p>
+systemctl enable docker &amp;&amp; systemctl start docker</p>
 
 <p>cat &lt;<EOF > /etc/yum.repos.d/kubernetes.repo
-   [kubernetes]
-   name=Kubernetes
-   baseurl=<a href="https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64">https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</a>
-   enabled=1
-   gpgcheck=1
-   repo_gpgcheck=1
-   gpgkey=<a href="https://packages.cloud.google.com/yum/doc/yum-key.gpg">https://packages.cloud.google.com/yum/doc/yum-key.gpg</a> <a href="https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg">https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</a>
-   EOF
-   yum install -y kubelet kubeadm kubectl
-   systemctl enable kubelet &amp;&amp; systemctl start kubelet</p>
+[kubernetes]
+name=Kubernetes
+baseurl=<a href="https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64">https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</a>
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=<a href="https://packages.cloud.google.com/yum/doc/yum-key.gpg">https://packages.cloud.google.com/yum/doc/yum-key.gpg</a> <a href="https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg">https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</a>
+EOF
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet &amp;&amp; systemctl start kubelet</p>
 
 <p>kubeadm init &ndash;pod-network-cidr=10.244.0.0/16</p>
 
@@ -220,43 +219,43 @@ systemctl disable firewalld</li>
 <p>kubectl apply -f <a href="https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml">https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</a></p>
 
 <p>kubectl get pods &ndash;all-namespaces
-   kubectl get nodes</p>
+kubectl get nodes</p>
 
 <pre><code>
 
 2. 在剩下的2台VPS上分别部署Slave节点。2台的命令相同，流水账如下：
-   ```shell
-   systemctl stop firewalld
-   systemctl disable firewalld
+```shell
+systemctl stop firewalld
+systemctl disable firewalld
 
-   cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
-   net.bridge.bridge-nf-call-ip6tables = 1
-   net.bridge.bridge-nf-call-iptables = 1
-   EOF
-   sysctl --system
+cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl --system
 
-   setenforce 0
+setenforce 0
 
-   swapoff -a
+swapoff -a
 
-   yum update
+yum update
 
-   yum install -y docker
-   systemctl enable docker &amp;&amp; systemctl start docker
+yum install -y docker
+systemctl enable docker &amp;&amp; systemctl start docker
 
-   cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
-   [kubernetes]
-   name=Kubernetes
-   baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-   enabled=1
-   gpgcheck=1
-   repo_gpgcheck=1
-   gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-   EOF
-   yum install -y kubelet kubeadm kubectl
-   systemctl enable kubelet &amp;&amp; systemctl start kubelet
+cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet &amp;&amp; systemctl start kubelet
 
-   kubeadm join --token cb320d.dffffef06d409d96 45.32.130.55:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2020906b3a38ddf924480f
+kubeadm join --token cb320d.dffffef06d409d96 45.32.130.55:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2020906b3a38ddf924480f
 </code></pre>
 
 <ol>
@@ -268,23 +267,23 @@ curl -L <a href="https://git.io/getLatestIstio">https://git.io/getLatestIstio</a
 <p>cd istio-0.4.0</p>
 
 <p>kubectl apply -f install/kubernetes/istio-auth.yaml
-   kubectl apply -f install/kubernetes/istio-auth.yaml
-   kubectl apply -f install/kubernetes/istio-initializer.yaml
-   kubectl apply -f install/kubernetes/istio-initializer.yaml
-   kubectl get svc -n istio-system
-   kubectl get pods -n istio-system</p>
+kubectl apply -f install/kubernetes/istio-auth.yaml
+kubectl apply -f install/kubernetes/istio-initializer.yaml
+kubectl apply -f install/kubernetes/istio-initializer.yaml
+kubectl get svc -n istio-system
+kubectl get pods -n istio-system</p>
 
 <p>kubectl create -f samples/bookinfo/kube/bookinfo.yaml
-   kubectl get services
-   kubectl get pods</p>
+kubectl get services
+kubectl get pods</p>
 
 <p>kubectl -n istio-system get po -l istio=ingress -o jsonpath=&lsquo;{.items[0].status.hostIP}&rsquo;
-   kubectl -n istio-system get svc istio-ingress
-   curl -o /dev/null -s -w &ldquo;%{http_code}\n&rdquo; <a href="http://45.77.185.209:32384/productpage">http://45.77.185.209:32384/productpage</a></p>
+kubectl -n istio-system get svc istio-ingress
+curl -o /dev/null -s -w &ldquo;%{http_code}\n&rdquo; <a href="http://45.77.185.209:32384/productpage">http://45.77.185.209:32384/productpage</a></p>
 
 <p>kubectl create -f samples/bookinfo/kube/route-rule-all-v1.yaml
-   kubectl create -f samples/bookinfo/kube/route-rule-reviews-test-v2.yaml
-   ```</p>
+kubectl create -f samples/bookinfo/kube/route-rule-reviews-test-v2.yaml
+```</p>
 
 <h3 id="四-验证">四、验证</h3>
 
