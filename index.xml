@@ -52,51 +52,54 @@
 
 &lt;h3 id=&#34;三-实施&#34;&gt;三、实施&lt;/h3&gt;
 
-&lt;h1 id=&#34;任选1台vps部署master节点-命令的流水账如下&#34;&gt;任选1台VPS部署Master节点。命令的流水账如下：&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;步骤一：任选1台VPS部署Master节点。命令的流水账如下：
+```shell
+systemctl stop firewalld
+systemctl disable firewalld&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;systemctl stop firewalld
-systemctl disable firewalld
-
-cat &amp;lt;&amp;lt;EOF &amp;gt;  /etc/sysctl.d/k8s.conf
+&lt;p&gt;cat &amp;lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
-sysctl --system
+sysctl &amp;ndash;system&lt;/p&gt;
 
-setenforce 0
+&lt;p&gt;setenforce 0&lt;/p&gt;
 
-swapoff -a
+&lt;p&gt;swapoff -a&lt;/p&gt;
 
-yum update
+&lt;p&gt;yum update&lt;/p&gt;
 
-yum install -y docker
-systemctl enable docker &amp;amp;&amp;amp; systemctl start docker
+&lt;p&gt;yum install -y docker
+systemctl enable docker &amp;amp;&amp;amp; systemctl start docker&lt;/p&gt;
 
-cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo
+&lt;p&gt;cat &amp;lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+baseurl=&lt;a href=&#34;https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64&#34;&gt;https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64&lt;/a&gt;
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+gpgkey=&lt;a href=&#34;https://packages.cloud.google.com/yum/doc/yum-key.gpg&#34;&gt;https://packages.cloud.google.com/yum/doc/yum-key.gpg&lt;/a&gt; &lt;a href=&#34;https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg&#34;&gt;https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg&lt;/a&gt;
 EOF
 yum install -y kubelet kubeadm kubectl
-systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet
+systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet&lt;/p&gt;
 
-kubeadm init --pod-network-cidr=10.244.0.0/16
+&lt;p&gt;kubeadm init &amp;ndash;pod-network-cidr=10.244.0.0/16&lt;/p&gt;
 
-export KUBECONFIG=/etc/kubernetes/admin.conf
+&lt;p&gt;export KUBECONFIG=/etc/kubernetes/admin.conf&lt;/p&gt;
 
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+&lt;p&gt;kubectl apply -f &lt;a href=&#34;https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml&#34;&gt;https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml&lt;/a&gt;&lt;/p&gt;
 
-kubectl get pods --all-namespaces
-kubectl get nodes
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;kubectl get pods &amp;ndash;all-namespaces
+kubectl get nodes&lt;/p&gt;
 
-&lt;h1 id=&#34;在剩下的2台vps上分别部署slave节点-2台的命令相同-流水账如下&#34;&gt;在剩下的2台VPS上分别部署Slave节点。2台的命令相同，流水账如下：&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;systemctl stop firewalld
+- 步骤二：在剩下的2台VPS上分别部署Slave节点。2台的命令相同，流水账如下：
+```shell
+systemctl stop firewalld
 systemctl disable firewalld
 
 cat &amp;lt;&amp;lt;EOF &amp;gt;  /etc/sysctl.d/k8s.conf
@@ -129,30 +132,32 @@ systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet
 kubeadm join --token cb320d.dffffef06d409d96 45.32.130.55:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2020906b3a38ddf924480f
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h1 id=&#34;在master节点上部署istio-运行bookinfo示例-命令的流水账如下&#34;&gt;在Master节点上部署Istio，运行BookInfo示例。命令的流水账如下：&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;步骤三：在Master节点上部署Istio，运行BookInfo示例。命令的流水账如下：
+```shell
+curl -L &lt;a href=&#34;https://git.io/getLatestIstio&#34;&gt;https://git.io/getLatestIstio&lt;/a&gt; | sh -&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;curl -L https://git.io/getLatestIstio | sh -
+&lt;p&gt;cd istio-0.4.0&lt;/p&gt;
 
-cd istio-0.4.0
-
-kubectl apply -f install/kubernetes/istio-auth.yaml
+&lt;p&gt;kubectl apply -f install/kubernetes/istio-auth.yaml
 kubectl apply -f install/kubernetes/istio-auth.yaml
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 kubectl get svc -n istio-system
-kubectl get pods -n istio-system
+kubectl get pods -n istio-system&lt;/p&gt;
 
-kubectl create -f samples/bookinfo/kube/bookinfo.yaml
+&lt;p&gt;kubectl create -f samples/bookinfo/kube/bookinfo.yaml
 kubectl get services
-kubectl get pods
+kubectl get pods&lt;/p&gt;
 
-kubectl -n istio-system get po -l istio=ingress -o jsonpath=&#39;{.items[0].status.hostIP}&#39;
+&lt;p&gt;kubectl -n istio-system get po -l istio=ingress -o jsonpath=&amp;lsquo;{.items[0].status.hostIP}&amp;rsquo;
 kubectl -n istio-system get svc istio-ingress
-curl -o /dev/null -s -w &amp;quot;%{http_code}\n&amp;quot; http://45.77.185.209:32384/productpage
+curl -o /dev/null -s -w &amp;ldquo;%{http_code}\n&amp;rdquo; &lt;a href=&#34;http://45.77.185.209:32384/productpage&#34;&gt;http://45.77.185.209:32384/productpage&lt;/a&gt;&lt;/p&gt;
 
-kubectl create -f samples/bookinfo/kube/route-rule-all-v1.yaml
+&lt;p&gt;kubectl create -f samples/bookinfo/kube/route-rule-all-v1.yaml
 kubectl create -f samples/bookinfo/kube/route-rule-reviews-test-v2.yaml
-&lt;/code&gt;&lt;/pre&gt;
+```&lt;/p&gt;
 
 &lt;h3 id=&#34;四-验证&#34;&gt;四、验证&lt;/h3&gt;
 
