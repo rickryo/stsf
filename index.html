@@ -131,6 +131,42 @@
             
             
             <article class="post-preview">
+              <a href="http://www.staytruestayfree.com/post/quickly_deploy_istio/">
+          	  <h2 class="post-title">快速搭建Istio环境</h2>
+          	
+          	    
+              </a>
+
+              <p class="post-meta">
+                Posted on January 26, 2018
+              </p>
+            
+              <div class="post-entry">
+                【问题域】  任务：搭建一个Istio的Bookinfo Sample
+ 约束：搭建成果要求公网可访问可确认
+ 资源：三个晚上的时间，一个Vultr账号，一台MacBook Pro
+  ​
+【解决域】 一、选型  基于Kubernetes以外的平台  和Kubernetes平台比各方面未见优势，不考虑
+​
+ 基于在MacBook Pro上搭建的Minikube  公开到公网还需要花生壳等的支持，硬件有限时间更有限，或许可行，先不考虑
+​
+ 基于在Vultr上Creating Kubernetes from Scratch（2-3节点）  此方案最能匹配进行该任务的初衷（学习Kubernetes搭建），但步骤较多时间不够，NG
+​
+ 基于在Vultr上使用kubeadm搭建的Kubernetes集群  步骤不多，时间上或许可行，可作为备选方案
+​
+ 在Google Cloud Platform 上搭建Kubernetes + Istio  一站式解决，步骤最少，自带免费服务器资源，选为首选方案
+​
+二、实施  到Istio官网找到Quick Start with Google Kubernetes Engine作为整个实施过程的指南资料。
+ 到Google Cloud Platform，注册账号，提交信用卡信息，获取$300的一年免费资源。
+ 虽然申请成功，但付款设置里的结算信用卡账号被冻结，需要向谷歌在线申诉，申诉填写的内容很简单，但需要上传身份证/护照照片和信用卡正面照片（卡号用手指遮挡只露出4位尾号即可），一天内得到邮件回复信用卡账号解冻。（信用卡账号冻结的情况网上也有反映，我申请免费资源时收到了$1的信用卡支付失败短信，我怀疑跟我使用海外IP使用信用卡有关，抑或是银行针对性的封锁。）
+ 到Google Container Engine API打开对此API的使用（使用获赠的免费资源）。
+ 到Cloud Console，找到Compute Engine default service account（账号格式为projectNumber-compute@developer.
+          	  <a href="http://www.staytruestayfree.com/post/quickly_deploy_istio/" class="post-read-more">[Read&nbsp;More]</a>
+              </div>
+            
+             </article>
+            
+            <article class="post-preview">
               <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/">
           	  <h2 class="post-title">Cache-Aside模式</h2>
           	
@@ -277,7 +313,7 @@ C#
         </ul>
         <p class="copyright text-muted">
 		      ©
-			  2017
+			  2018
 			  R.R.
 			  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Some rights reserved</a>
 
