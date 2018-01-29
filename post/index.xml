@@ -168,10 +168,10 @@ curl -L &lt;a href=&#34;https://git.io/getLatestIstio&#34;&gt;https://git.io/get
     
     <item>
       <title>快速搭建Istio环境</title>
-      <link>http://www.staytruestayfree.com/post/quickly_deploy_istio/</link>
+      <link>http://www.staytruestayfree.com/post/deploy_istio_quickly/</link>
       <pubDate>Fri, 26 Jan 2018 18:15:16 +0800</pubDate>
       
-      <guid>http://www.staytruestayfree.com/post/quickly_deploy_istio/</guid>
+      <guid>http://www.staytruestayfree.com/post/deploy_istio_quickly/</guid>
       <description>
 
 &lt;h3 id=&#34;问题域&#34;&gt;【问题域】&lt;/h3&gt;
