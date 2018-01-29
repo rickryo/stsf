@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>快速搭建Istio环境</title>
+
+  <meta name="author" content="R.R." />
+  
+  
+
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  <link rel="alternate" href="http://www.staytruestayfree.com/index.xml" type="application/rss+xml" title="Stay True Stay Free">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/pygment_highlights.css" />
+  
+  
+  <meta property="og:title" content="快速搭建Istio环境" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/post/quickly_deploy_istio//" />
+  <meta property="og:image" content="img/avatar-icon.png" />
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="/css/highlight/qtcreator_dark.min.css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <meta baidu-gxt-verify-token="ba5bea36281df07ac058f5a822681d6a">
+  
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?024ec073da13c95f4e642eb63786e038";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://www.staytruestayfree.com/">Stay True Stay Free</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Blog" href="/">Blog</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/page/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Stay True Stay Free" href="http://www.staytruestayfree.com/">
+              <img class="avatar-img" src="http://www.staytruestayfree.com/img/avatar-icon.png" alt="Stay True Stay Free" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>快速搭建Istio环境</h1>
+      
+      
+      
+      <span class="post-meta">Posted on January 26, 2018</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+
+<h3 id="问题域">【问题域】</h3>
+
+<ul>
+<li><p>任务：搭建一个Istio的Bookinfo Sample</p></li>
+
+<li><p>约束：搭建成果要求公网可访问可确认</p></li>
+
+<li><p>资源：三个晚上的时间，一个Vultr账号，一台MacBook Pro</p></li>
+</ul>
+
+<p>​</p>
+
+<h3 id="解决域">【解决域】</h3>
+
+<h3 id="一-选型">一、选型</h3>
+
+<ul>
+<li>基于Kubernetes以外的平台</li>
+</ul>
+
+<p>和Kubernetes平台比各方面未见优势，不考虑</p>
+
+<p>​</p>
+
+<ul>
+<li>基于在MacBook Pro上搭建的Minikube</li>
+</ul>
+
+<p>公开到公网还需要花生壳等的支持，硬件有限时间更有限，或许可行，先不考虑</p>
+
+<p>​</p>
+
+<ul>
+<li>基于在Vultr上Creating Kubernetes from Scratch（2-3节点）</li>
+</ul>
+
+<p>此方案最能匹配进行该任务的初衷（学习Kubernetes搭建），但步骤较多时间不够，NG</p>
+
+<p>​</p>
+
+<ul>
+<li>基于在Vultr上使用kubeadm搭建的Kubernetes集群</li>
+</ul>
+
+<p>步骤不多，时间上或许可行，可作为备选方案</p>
+
+<p>​</p>
+
+<ul>
+<li>在Google Cloud Platform 上搭建Kubernetes + Istio</li>
+</ul>
+
+<p>一站式解决，步骤最少，自带免费服务器资源，选为首选方案</p>
+
+<p>​</p>
+
+<h3 id="二-实施">二、实施</h3>
+
+<ol>
+<li><p>到Istio官网找到<a href="https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html">Quick Start with Google Kubernetes Engine</a>作为整个实施过程的指南资料。</p></li>
+
+<li><p>到<a href="https://cloud.google.com/free/?hl=zh-cn">Google Cloud Platform</a>，注册账号，提交信用卡信息，获取$300的一年免费资源。</p></li>
+
+<li><p>虽然申请成功，但付款设置里的结算信用卡账号被冻结，需要向谷歌在线申诉，申诉填写的内容很简单，但需要上传身份证/护照照片和信用卡正面照片（卡号用手指遮挡只露出4位尾号即可），一天内得到邮件回复信用卡账号解冻。（信用卡账号冻结的情况网上也有反映，我申请免费资源时收到了$1的信用卡支付失败短信，我怀疑跟我使用海外IP使用信用卡有关，抑或是银行针对性的封锁。）</p></li>
+
+<li><p>到<a href="https://console.cloud.google.com/apis/library/container.googleapis.com/">Google Container Engine API</a>打开对此API的使用（使用获赠的免费资源）。</p></li>
+
+<li><p>到<a href="https://console.cloud.google.com/iam-admin/iam/project">Cloud Console</a>，找到Compute Engine default service account（账号格式为projectNumber-compute@developer.gserviceaccount.com），对此账号在缺省的Editor角色外添加Kubernetes Engine Admin角色。</p></li>
+
+<li><p>到<a href="https://accounts.google.com/signin/v2/identifier?service=cloudconsole&amp;continue=https://console.cloud.google.com/launcher/config?templateurl=https://raw.githubusercontent.com/istio/istio/master/install/gcp/deployment_manager/istio-cluster.jinja&amp;followup=https://console.cloud.google.com/launcher/config?templateurl=https://raw.githubusercontent.com/istio/istio/master/install/gcp/deployment_manager/istio-cluster.jinja&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin">Istio GKE Deployment Manager</a>安装Kubernetes + Istio + BookInfo，按照官网的说法，直接使用缺省设置Deploy即可。</p></li>
+
+<li><p>但直接使用缺省设置Deploy，安装过程中会报*Quota &lsquo;CPUS&rsquo; exceeded. Limit: 8.0*的错。这是因为免费资源在一个Zone最多只提供8 cpus的资源，安装过程中不够用（安装过程中要使用比最终占用的更多的cpus）。解决办法是把*Node Machine Type*从缺省的2 vCPU改小为1 vCPU。（因为官网说使用GKE搭BookInfo至少要4个nodes，所以我们不改变缺省的<em>Number of GKE nodes to run on</em> = 4）</p></li>
+
+<li><p>安装过程中还遇到了部署waiter超时的错误，最终安装成功的版本的设置为：在步骤7的设置以外，把缺省设置中除*Add BookInfo Sample Application*以外的其它可选模块都不选了，但也许该错误与选择的模块无关，即使都选也可以成功（未经验证）。</p></li>
+
+<li><p>在<a href="https://console.cloud.google.com/kubernetes?_ga=2.200621287.893168199.1516952438-232307664.1502076417">Google Kubernetes Engine Console</a> 的上部标题栏中，点击*Activate Google Cloud Shell*图标启动gcloud的在线控制台。图标位置参见<img src="https://cloud.google.com/shell/docs/images/startcloudshell1.png" alt="示意图" />。</p></li>
+
+<li><p>在gcloud控制台中，执行以下命令：</p>
+
+<pre><code class="language-shell">gcloud container clusters list
+gcloud container clusters get-credentials istio-cluster --zone=us-central1-a
+</code></pre></li>
+
+<li><p>在gcloud控制台中，执行以下命令：</p>
+
+<pre><code class="language-shell">kubectl get deployments,ing
+</code></pre>
+
+<p>在命令执行后输出的信息中，找到ADDRESS和PORTS，此即为公网上访问BookInfo Sample的IP和端口。</p></li>
+
+<li><p>访问http://<em>ADDRESS:PORTS</em>/productpage即可看到BookInfo Sample的页面，其中的*ADDRESS:PORTS*替换为上一步中得到的信息。</p></li>
+
+<li><p>使用完成后，可在Google Cloud的<a href="https://console.cloud.google.com/deployments">部署管理器</a>中删除所有已部署的环境。</p></li>
+</ol>
+
+<h3 id="致谢">致谢</h3>
+
+<p>感谢王老师！
+于这凋敝，犬儒，浮虚的园子里，
+久违了，真战士！</p>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="http://www.staytruestayfree.com/post/cdp-cache-aside-pattern/" data-toggle="tooltip" data-placement="top" title="Cache-Aside模式">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="http://www.staytruestayfree.com/post/deploy_istio_on_vps/" data-toggle="tooltip" data-placement="top" title="在VPS上搭建Istio环境">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+		      
+		      
+		      
+          <li>
+            <a href="/img/contact.png" title="Contact me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="http://www.staytruestayfree.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>		
+
+        </ul>
+        <p class="copyright text-muted">
+		      ©
+			  2018
+			  R.R.
+			  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Some rights reserved</a>
+
+  	    </p>
+  	        
+    		<p class="theme-by text-muted">
+    		  Powered by 
+    		  <a href="http://gohugo.io">Hugo</a>
+			  <br/>
+    		  Theme by
+    		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="http://www.staytruestayfree.com/js/jquery-1.11.2.min.js"></script>
+<script src="http://www.staytruestayfree.com/js/bootstrap.min.js"></script>
+<script src="http://www.staytruestayfree.com/js/main.js"></script>
+
+
+
+  </body>
+</html>
