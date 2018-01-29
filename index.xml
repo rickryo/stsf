@@ -125,7 +125,7 @@ EOF
 yum install -y kubelet kubeadm kubectl
 systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet
 
-kubeadm join --token cb320d.dffffef06d409d96 45.32.130.55:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2020906b3a38ddf924480f
+kubeadm join --token cb320d.dffffef07d403d95 45.38.123.45:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2050906b3a33ddf924480f
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;步骤三：在Master节点上部署Istio，运行BookInfo示例。命令的流水账如下：&lt;/p&gt;
@@ -147,7 +147,7 @@ kubectl get pods
 
 kubectl -n istio-system get po -l istio=ingress -o jsonpath=&#39;{.items[0].status.hostIP}&#39;
 kubectl -n istio-system get svc istio-ingress
-curl -o /dev/null -s -w &amp;quot;%{http_code}\n&amp;quot; http://45.77.185.209:32384/productpage
+curl -o /dev/null -s -w &amp;quot;%{http_code}\n&amp;quot; http://45.66.157.87:32384/productpage
 
 kubectl create -f samples/bookinfo/kube/route-rule-all-v1.yaml
 kubectl create -f samples/bookinfo/kube/route-rule-reviews-test-v2.yaml
