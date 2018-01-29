@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>在VPS上搭建Istio环境</title>
+
+  <meta name="author" content="R.R." />
+  
+  
+
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  <link rel="alternate" href="http://www.staytruestayfree.com/index.xml" type="application/rss+xml" title="Stay True Stay Free">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://www.staytruestayfree.com/css/pygment_highlights.css" />
+  
+  
+  <meta property="og:title" content="在VPS上搭建Istio环境" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/post/deploy_istio_on_vps//" />
+  <meta property="og:image" content="img/avatar-icon.png" />
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="/css/highlight/qtcreator_dark.min.css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <meta baidu-gxt-verify-token="ba5bea36281df07ac058f5a822681d6a">
+  
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?024ec073da13c95f4e642eb63786e038";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://www.staytruestayfree.com/">Stay True Stay Free</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="Blog" href="/">Blog</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="About" href="/page/about/">About</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Stay True Stay Free" href="http://www.staytruestayfree.com/">
+              <img class="avatar-img" src="http://www.staytruestayfree.com/img/avatar-icon.png" alt="Stay True Stay Free" />
+          </a>
+      
+	  </div>
+	</div>
+
+  </div>
+</nav>
+
+
+    <div role="main" class="container main-content">
+
+      
+        
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>在VPS上搭建Istio环境</h1>
+      
+      
+      
+      <span class="post-meta">Posted on January 29, 2018</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+
+<h3 id="一-任务">一、任务</h3>
+
+<ul>
+<li><p>使用kubeadm搭建一个1master+2slaves的kubernates集群</p></li>
+
+<li><p>于集群上部署Istio，运行其BookInfo示例。</p></li>
+</ul>
+
+<p>​</p>
+
+<h3 id="二-准备">二、准备</h3>
+
+<ul>
+<li>在Vultr上申请三台VPS，配置均为2 vCore，4G RAM。（实际搭建运行时性能无压力。）
+
+<ul>
+<li>需要注意的是，很多海外VPS的IP都被封掉了，ping不通。（可到站长之家之类的网站去确认，国内ping不通，海外可通。）对此可重建VPS直至获取可访问的IP，或者依赖科学上网的跳板机。</li>
+<li>另外，做验证只使用公网IP即可，无需使用数据中心的内网IP（当然实际的生产环境是使用内网IP的），甚至这三台VPS还可以是跨数据中心的，都可以搭建成功。</li>
+</ul></li>
+
+<li><p>基本的知识依据为官网指南，按使用顺序依次为</p>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/">安装kubeadm</a> <code>注1</code></li>
+<li><a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/">安装kubernates集群</a><code>注1</code></li>
+<li><a href="https://istio.io/docs/setup/kubernetes/quick-start.html">安装Istio</a></li>
+<li><a href="https://istio.io/docs/guides/bookinfo.html">安装BookInfo示例</a></li>
+<li><a href="https://istio.io/docs/tasks/traffic-management/ingress.html">Istio Ingress Controller介绍</a>的*Verifying ingress*部分<code>注2</code></li>
+</ul></li>
+</ul>
+
+<p><code>注1</code>：安装kubeadm和kubernates集群时，预想坑会比较多，还查阅了一些技术博客和官网对比了一下，但发现除了说明顺序不一样外（官网把很多细节放到Notes里），技术博客中提到的要点，在官网基本上都是有所体现。
+  <code>注2</code>：按说前4篇做完就应该结束了，但存在一个问题：Istio官网上的上述文档只给出了存在外部负载均衡的环境下查找ingress的对外IP和端口的方法，新装的环境并不具备外部负载均衡，因此还需要阅读第5篇的内容，使用不具备外部负载均衡环境下的相应手段找到对外IP和端口。</p>
+
+<h3 id="三-实施">三、实施</h3>
+
+<ol>
+<li>任选1台VPS部署Master节点。命令的流水账如下：
+```shell
+systemctl stop firewalld
+systemctl disable firewalld</li>
+</ol>
+
+<p>cat &lt;<EOF >  /etc/sysctl.d/k8s.conf
+   net.bridge.bridge-nf-call-ip6tables = 1
+   net.bridge.bridge-nf-call-iptables = 1
+   EOF
+   sysctl &ndash;system</p>
+
+<p>setenforce 0</p>
+
+<p>swapoff -a</p>
+
+<p>yum update</p>
+
+<p>yum install -y docker
+   systemctl enable docker &amp;&amp; systemctl start docker</p>
+
+<p>cat &lt;<EOF > /etc/yum.repos.d/kubernetes.repo
+   [kubernetes]
+   name=Kubernetes
+   baseurl=<a href="https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64">https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</a>
+   enabled=1
+   gpgcheck=1
+   repo_gpgcheck=1
+   gpgkey=<a href="https://packages.cloud.google.com/yum/doc/yum-key.gpg">https://packages.cloud.google.com/yum/doc/yum-key.gpg</a> <a href="https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg">https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</a>
+   EOF
+   yum install -y kubelet kubeadm kubectl
+   systemctl enable kubelet &amp;&amp; systemctl start kubelet</p>
+
+<p>kubeadm init &ndash;pod-network-cidr=10.244.0.0/16</p>
+
+<p>export KUBECONFIG=/etc/kubernetes/admin.conf</p>
+
+<p>kubectl apply -f <a href="https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml">https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</a></p>
+
+<p>kubectl get pods &ndash;all-namespaces
+   kubectl get nodes</p>
+
+<pre><code>
+
+2. 在剩下的2台VPS上分别部署Slave节点。2台的命令相同，流水账如下：
+   ```shell
+   systemctl stop firewalld
+   systemctl disable firewalld
+
+   cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
+   net.bridge.bridge-nf-call-ip6tables = 1
+   net.bridge.bridge-nf-call-iptables = 1
+   EOF
+   sysctl --system
+
+   setenforce 0
+
+   swapoff -a
+
+   yum update
+
+   yum install -y docker
+   systemctl enable docker &amp;&amp; systemctl start docker
+
+   cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+   [kubernetes]
+   name=Kubernetes
+   baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+   enabled=1
+   gpgcheck=1
+   repo_gpgcheck=1
+   gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   EOF
+   yum install -y kubelet kubeadm kubectl
+   systemctl enable kubelet &amp;&amp; systemctl start kubelet
+
+   kubeadm join --token cb320d.dffffef06d409d96 45.32.130.55:6443 --discovery-token-ca-cert-hash sha256:83a5715933843b4ad623414bea22c9d710851c276b2020906b3a38ddf924480f
+</code></pre>
+
+<ol>
+<li>在Master节点上部署Istio，运行BookInfo示例。命令的流水账如下：
+```shell
+curl -L <a href="https://git.io/getLatestIstio">https://git.io/getLatestIstio</a> | sh -</li>
+</ol>
+
+<p>cd istio-0.4.0</p>
+
+<p>kubectl apply -f install/kubernetes/istio-auth.yaml
+   kubectl apply -f install/kubernetes/istio-auth.yaml
+   kubectl apply -f install/kubernetes/istio-initializer.yaml
+   kubectl apply -f install/kubernetes/istio-initializer.yaml
+   kubectl get svc -n istio-system
+   kubectl get pods -n istio-system</p>
+
+<p>kubectl create -f samples/bookinfo/kube/bookinfo.yaml
+   kubectl get services
+   kubectl get pods</p>
+
+<p>kubectl -n istio-system get po -l istio=ingress -o jsonpath=&lsquo;{.items[0].status.hostIP}&rsquo;
+   kubectl -n istio-system get svc istio-ingress
+   curl -o /dev/null -s -w &ldquo;%{http_code}\n&rdquo; <a href="http://45.77.185.209:32384/productpage">http://45.77.185.209:32384/productpage</a></p>
+
+<p>kubectl create -f samples/bookinfo/kube/route-rule-all-v1.yaml
+   kubectl create -f samples/bookinfo/kube/route-rule-reviews-test-v2.yaml
+   ```</p>
+
+<h3 id="四-验证">四、验证</h3>
+
+<p>在浏览器中访问部署过程最后得到的URL：http://{host:port}/productpage，可以看见画面，并可在此画面确认针对不同版本的Reviews的请求路由效果。</p>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="http://www.staytruestayfree.com/post/quickly_deploy_istio/" data-toggle="tooltip" data-placement="top" title="快速搭建Istio环境">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+		      
+		      
+		      
+          <li>
+            <a href="/img/contact.png" title="Contact me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+	    	  
+          
+          
+
+    		  <li>
+      			<a href="http://www.staytruestayfree.com/index.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>		
+
+        </ul>
+        <p class="copyright text-muted">
+		      ©
+			  2018
+			  R.R.
+			  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Some rights reserved</a>
+
+  	    </p>
+  	        
+    		<p class="theme-by text-muted">
+    		  Powered by 
+    		  <a href="http://gohugo.io">Hugo</a>
+			  <br/>
+    		  Theme by
+    		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="http://www.staytruestayfree.com/js/jquery-1.11.2.min.js"></script>
+<script src="http://www.staytruestayfree.com/js/bootstrap.min.js"></script>
+<script src="http://www.staytruestayfree.com/js/main.js"></script>
+
+
+
+  </body>
+</html>
