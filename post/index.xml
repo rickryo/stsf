@@ -29,7 +29,7 @@
 &lt;h3 id=&#34;二-准备&#34;&gt;二、准备&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;在Vultr上申请三台VPS，配置均为2 vCore，4G RAM。（实际搭建运行时性能无压力。）
+&lt;li&gt;在Vultr上申请三台VPS，配置均为2 vCore，4G RAM，OS都安装CentOS 7 x64。（实际搭建运行时性能无压力。）
 
 &lt;ul&gt;
 &lt;li&gt;需要注意的是，很多海外VPS的IP都被封掉了，ping不通。（可到站长之家之类的网站去确认，国内ping不通，海外可通。）对此可重建VPS直至获取可访问的IP，或者依赖科学上网的跳板机。&lt;/li&gt;
